@@ -8,5 +8,7 @@ UCLASS()
 class GAME_API AMyGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+protected:
+	virtual void BeginPlay();
 };
