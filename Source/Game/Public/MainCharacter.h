@@ -41,6 +41,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	class UInputAction* MoveAction;
 
+	//Custom tag that applies in BeginPlay()
+	//WARNING - Currently only applies to Controller character - on purpose.
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Tag")
+	FString tag;
+
+	//Reference blueprint self
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Actor")
+	AActor* self;
+
 	// Called for jumping input
 	void Jumping();
 

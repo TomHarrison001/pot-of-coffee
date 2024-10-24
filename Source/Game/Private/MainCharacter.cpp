@@ -15,9 +15,23 @@ void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+
+	//
+	// This is mainly for the pads, to diffirentiate between the players
+	// 
+	//If has a reference to itself...
+	if (self != nullptr)
+	{
+		//Remove default "Player" tag and add the new one added in the editor
+		self->Tags.RemoveAt(0);
+		self->Tags.Add(FName(tag));
+	}
+
+
 	// Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
+
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
