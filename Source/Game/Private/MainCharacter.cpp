@@ -15,19 +15,6 @@ void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-
-	//
-	// This is mainly for the pads, to diffirentiate between the players
-	// 
-	//If has a reference to itself...
-	if (self != nullptr)
-	{
-		//Remove default "Player" tag and add the new one added in the editor
-		self->Tags.RemoveAt(0);
-		self->Tags.Add(FName(tag));
-	}
-
-
 	// Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
@@ -67,6 +54,17 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 void AMainCharacter::Jumping()
 {
 	Jump();
+}
+
+FString AMainCharacter::GetTag()
+{
+	//Returns the first tag, returns no tags if there are no tags in first slot
+	
+	if (Tags.Num() > 0)
+	{
+		return Tags[0].ToString();
+	}
+	return FString("No Tags");
 }
 
 void AMainCharacter::Look(const FInputActionValue& Value)

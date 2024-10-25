@@ -8,6 +8,9 @@ void AMyGameMode::BeginPlay()
 	UGameInstance* gameInstance = World->GetGameInstance(); // Stores game instance
 	FString error = "Players not found!";
 
+	
+
 	// Create local multiplayer mode
 	ULocalPlayer* LocalPlayer = World->GetGameInstance()->CreateLocalPlayer(1, error, true);
 }
+

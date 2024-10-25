@@ -46,8 +46,7 @@ void UTriggerPadComponent::ChangePadColour(FLinearColor NewColour)
 
 				if (CubeMaterial != nullptr)
 				{
-					//Log pad is active and change the colour
-					GLog->Log("Pad Active.");
+					//Change pad colour
 					CubeMaterial->SetVectorParameterValue(FName("Color"), NewColour);
 				}
 			}
@@ -67,10 +66,10 @@ void UTriggerPadComponent::GetAllValidActors(float DeltaTime)
 		{
 			for (FName Tag : Actor->Tags) // Gets list of all tags from Actor
 			{
-				GLog->Log(Tag.ToString()); // Output to console
 
 				if (Tag == PlayerTag) // Open door when Actor has “Player” tag
 				{
+					GLog->Log("Change pad to Green.");
 					ChangePadColour(ActiveColour);
 				}
 			}
@@ -79,6 +78,7 @@ void UTriggerPadComponent::GetAllValidActors(float DeltaTime)
 		{
 			//If there are no actors in it, make the pad red
 			ChangePadColour(InactiveColour);
+			GLog->Log("Change pad to Red.");
 		}
 	}
 }

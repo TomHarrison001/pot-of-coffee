@@ -11,4 +11,8 @@ class GAME_API AMyGameMode : public AGameModeBase
 
 protected:
 	virtual void BeginPlay();
+
+public:
+
+
 };

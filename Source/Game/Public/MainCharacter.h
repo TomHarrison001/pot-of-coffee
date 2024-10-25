@@ -25,6 +25,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+
 	// Mapping Context file
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	class UInputMappingContext* DefaultMappingContext;
@@ -41,11 +42,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	class UInputAction* MoveAction;
 
-	//Custom tag that applies in BeginPlay()
-	//WARNING - Currently only applies to Controller character - on purpose.
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Tag")
-	FString tag;
-
 	//Reference blueprint self
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Actor")
 	AActor* self;
@@ -53,6 +49,9 @@ public:
 	// Called for jumping input
 	void Jumping();
 
+	//Return tag
+	FString GetTag();
+	
 	// Called for looking input
 	void Look(const FInputActionValue& Value);
 
