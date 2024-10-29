@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "MyGameMode.h"
 #include "MainCharacter.h"
 #include "TriggerPad.generated.h"
 
@@ -39,6 +40,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Pad")
 	FLinearColor ActiveColour = FLinearColor::Green;
 
+	//Other trigger pad
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Default")
+	AActor* TriggerPad1;
+
 	//Only activate when this tag touches it
 	UPROPERTY(EditAnywhere, Category = "Default")
 	FString ActivationTag;
@@ -58,5 +63,7 @@ public:
 	// overlap end function
 	UFUNCTION()
 	void OnOverlapEnd(class AActor* OverlappedActor, class AActor* OtherActor);
+
+
 
 };

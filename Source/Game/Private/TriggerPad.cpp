@@ -1,6 +1,3 @@
-
-
-
 #include "TriggerPad.h"
 
 // Sets default values
@@ -50,7 +47,16 @@ void ATriggerPad::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
 			// Log the tag with additional checks for empty tags handled in GetTag()
 			GLog->Log(MainChar->GetTag() + " Stepped on the pad");
 			ChangePadColour(ActiveColour);
+
+			//Set pad to on
+			//Check if can teleport, and if can, teleport
 			PadOn = true;
+			AMyGameMode* GameMode = Cast<AMyGameMode>(GetWorld()->GetAuthGameMode());
+			GameMode->PadActivated();
+			if (GameMode->TeleportReady())
+			{
+				MainChar->TeleportNewLocation();
+			}
 		}
 		else
 		{
@@ -65,8 +71,11 @@ void ATriggerPad::OnOverlapEnd(AActor* OverlappedActor, AActor* OtherActor)
 	//When stepped off, change back to red
 	ChangePadColour(InactiveColour);
 	PadOn = false;
+	AMyGameMode* GameMode = Cast<AMyGameMode>(GetWorld()->GetAuthGameMode());
+	GameMode->PadDeactivated();
 }
 
+//Change pad colour
 void ATriggerPad::ChangePadColour(FLinearColor NewColour)
 {
 	//If trigger volume is not null
@@ -90,4 +99,5 @@ void ATriggerPad::ChangePadColour(FLinearColor NewColour)
 		}
 	}
 }
+
 

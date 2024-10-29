@@ -56,9 +56,9 @@ void AMainCharacter::Jumping()
 	Jump();
 }
 
+//Returns the first tag, returns no tags if there are no tags in first slot
 FString AMainCharacter::GetTag()
 {
-	//Returns the first tag, returns no tags if there are no tags in first slot
 	
 	if (Tags.Num() > 0)
 	{
@@ -102,3 +102,47 @@ void AMainCharacter::Move(const FInputActionValue& Value)
 		AddMovementInput(RightDirection, MovementVector.X);
 	}
 }
+
+//Start teleport sequence
+void AMainCharacter::TeleportNewLocation()
+{
+	AMyGameMode* GameMode = Cast<AMyGameMode>(GetWorld()->GetAuthGameMode());
+	StartTeleportTimer();
+}
+
+//Start teleport countdown
+void AMainCharacter::StartTeleportTimer()
+{
+	//Set timer to 5 seconds, and start the timer (5 mins)
+	GLog->Log("Game Starting!");
+	GetWorldTimerManager().ClearTimer(LoopedTimerHandle);
+	TimedLoopsRemaining = 5;
+	GetWorldTimerManager().SetTimer(LoopedTimerHandle, this, &AMainCharacter::EndTeleportTimer, 1.0f, true, 1.0f);
+}
+
+//Timer finished, teleport
+void AMainCharacter::EndTeleportTimer()
+{
+	AMyGameMode* GameMode = Cast<AMyGameMode>(GetWorld()->GetAuthGameMode());
+
+	//Log seconds till teleport repeatidly
+	GLog->Log(FString::FromInt(TimedLoopsRemaining));
+	
+	//If not all pads are active during teleport sequence, interupt and cancel teleport
+	if (!GameMode->TeleportReady())
+	{
+		GetWorldTimerManager().ClearTimer(LoopedTimerHandle);
+		GLog->Log("Teleport Aborted... Remain on pads to telport.");
+	}
+	else if (--TimedLoopsRemaining < 0)
+	{
+		//Teleport the main char
+		GetWorldTimerManager().ClearTimer(LoopedTimerHandle);
+		GLog->Log("Teleporting...");
+
+		TeleportTo(GameMode->GetSpawnLevel(), GetActorRotation());
+	}
+
+	
+}
+
