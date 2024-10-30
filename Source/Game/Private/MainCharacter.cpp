@@ -140,6 +140,8 @@ void AMainCharacter::EndTeleportTimer()
 		GetWorldTimerManager().ClearTimer(LoopedTimerHandle);
 		GLog->Log("Teleporting...");
 
+		GameMode->GetScore();
+
 		TeleportTo(GameMode->GetSpawnLevel(), GetActorRotation());
 	}
 

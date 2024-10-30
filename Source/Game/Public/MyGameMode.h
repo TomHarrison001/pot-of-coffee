@@ -13,7 +13,9 @@ protected:
 	virtual void BeginPlay();
 
 public:
-
+	void Player0Scored();
+	void Player1Scored();
+	void GetScore();
 
 	void PadActivated();
 	void PadDeactivated();
@@ -28,7 +30,10 @@ private:
 	int PadsActivated;
 
 	UPROPERTY(VisibleAnywhere, Category = "Levels")
-	FVector LevelPositionsPlayer0[10] = { FVector(0.0f,0.0f,0.0f) };
-	
+	FVector LevelPositionsPlayer0[10] = { FVector(0.0f,-4150.0f,5.f) };
+	FVector LevelPositionsPlayer1[10] = { FVector(0.0f,-4150.0f,5.f) };
 
+	int Player0Score;
+	int Player1Score;
+	
 };
