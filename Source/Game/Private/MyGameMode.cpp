@@ -6,9 +6,7 @@ void AMyGameMode::BeginPlay()
 
 	UWorld* World = GetWorld(); // Returns the world the actor is in
 	UGameInstance* gameInstance = World->GetGameInstance(); // Stores game instance
-	FString error = "Players not fouwnd!";
-
-	
+	FString error = "Players not found!";
 
 	// Create local multiplayer mode
 	ULocalPlayer* LocalPlayer = World->GetGameInstance()->CreateLocalPlayer(1, error, true);
@@ -39,10 +37,18 @@ bool AMyGameMode::TeleportReady()
 	return PadsActivated == 2;
 }
 
-//Return spawn pos for player0
-FVector AMyGameMode::GetSpawnLevel()
+// Return start position for level
+FVector AMyGameMode::GetLevelStartPos(int player, int level)
 {
-	return LevelPositionsPlayer0[0];
+	return StartPositions[level * 2 + player];
+}
+
+void AMyGameMode::TeleportPlayers(int level)
+{
+	AActor* Player = Players[0];
+	Player->TeleportTo(GetLevelStartPos(0, level), Player->GetActorRotation());
+	Player = Players[1];
+	Player->TeleportTo(GetLevelStartPos(1, level), Player->GetActorRotation());
 }
 
 void AMyGameMode::PadActivated()
@@ -54,6 +60,3 @@ void AMyGameMode::PadDeactivated()
 {
 	PadsActivated--;
 }
-
-
-

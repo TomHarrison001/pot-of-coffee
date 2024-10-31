@@ -26,7 +26,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-
 	// Mapping Context file
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	class UInputMappingContext* DefaultMappingContext;
@@ -43,7 +42,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	class UInputAction* MoveAction;
 
-	//Reference blueprint self
+	// Reference blueprint self
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Actor")
 	AActor* self;
 
@@ -58,8 +57,6 @@ public:
 
 	// Called for movement input
 	void Move(const FInputActionValue& Value);
-
-	void TeleportNewLocation();
 
 	void StartTeleportTimer();
 	void EndTeleportTimer();

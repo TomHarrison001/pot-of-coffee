@@ -1,6 +1,3 @@
-
-
-
 #include "FloatingCustomText.h"
 
 // Sets default values
@@ -14,7 +11,6 @@ AFloatingCustomText::AFloatingCustomText()
 	MyText->SetText(FText::FromString(TEXT("defaultText")));// Set Text
 
 	RootComponent = MyText; // adding MyText to root component. Without doing this you wont see the component being displayed.
-
 }
 
 // Called when the game starts or when spawned
@@ -26,13 +22,10 @@ void AFloatingCustomText::BeginPlay()
 	{
 		MyText->SetText(FText::FromString(InputText));
 	}
-
 }
 
 // Called every frame
 void AFloatingCustomText::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
-

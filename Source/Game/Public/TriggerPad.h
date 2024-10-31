@@ -1,5 +1,3 @@
-
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -40,6 +38,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Pad")
 	FLinearColor ActiveColour = FLinearColor::Green;
 
+	//Inactive colour
+	UPROPERTY(EditAnywhere, Category = "Pad")
+	FLinearColor InactiveColour = FLinearColor::Red;
+
 	//Other trigger pad
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Default")
 	AActor* TriggerPad1;
@@ -47,10 +49,6 @@ public:
 	//Only activate when this tag touches it
 	UPROPERTY(EditAnywhere, Category = "Default")
 	FString ActivationTag;
-
-	//Inactive colour
-	UPROPERTY(EditAnywhere, Category = "Pad")
-	FLinearColor InactiveColour = FLinearColor::Red;
 
 	//on or off
 	UPROPERTY(VisibleAnywhere, Category = "Pad")
@@ -63,7 +61,4 @@ public:
 	// overlap end function
 	UFUNCTION()
 	void OnOverlapEnd(class AActor* OverlappedActor, class AActor* OtherActor);
-
-
-
 };

@@ -24,15 +24,12 @@ ATriggerPad::ATriggerPad()
 void ATriggerPad::BeginPlay()
 {
 	Super::BeginPlay();
-
-	
 }
 
 // Called every frame
 void ATriggerPad::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void ATriggerPad::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
@@ -53,16 +50,16 @@ void ATriggerPad::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
 			PadOn = true;
 			AMyGameMode* GameMode = Cast<AMyGameMode>(GetWorld()->GetAuthGameMode());
 			GameMode->PadActivated();
+			GameMode->Players[(ActivationTag == "Player0") ? 0 : 1] = MainChar;
 			if (GameMode->TeleportReady())
 			{
-				MainChar->TeleportNewLocation();
+				MainChar->StartTeleportTimer();
 			}
 		}
 		else
 		{
 			GLog->Log("Wrong Pad.");
 		}
-
 	}
 }
 
@@ -99,5 +96,3 @@ void ATriggerPad::ChangePadColour(FLinearColor NewColour)
 		}
 	}
 }
-
-

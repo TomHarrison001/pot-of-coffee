@@ -56,17 +56,6 @@ void AMainCharacter::Jumping()
 	Jump();
 }
 
-//Returns the first tag, returns no tags if there are no tags in first slot
-FString AMainCharacter::GetTag()
-{
-	
-	if (Tags.Num() > 0)
-	{
-		return Tags[0].ToString();
-	}
-	return FString("No Tags");
-}
-
 void AMainCharacter::Look(const FInputActionValue& Value)
 {
 	// Input is a Vector2D
@@ -103,11 +92,14 @@ void AMainCharacter::Move(const FInputActionValue& Value)
 	}
 }
 
-//Start teleport sequence
-void AMainCharacter::TeleportNewLocation()
+//Returns the first tag, returns no tags if there are no tags in first slot
+FString AMainCharacter::GetTag()
 {
-	AMyGameMode* GameMode = Cast<AMyGameMode>(GetWorld()->GetAuthGameMode());
-	StartTeleportTimer();
+	if (Tags.Num() > 0)
+	{
+		return Tags[0].ToString();
+	}
+	return FString("No Tags");
 }
 
 //Start teleport countdown
@@ -141,10 +133,6 @@ void AMainCharacter::EndTeleportTimer()
 		GLog->Log("Teleporting...");
 
 		GameMode->GetScore();
-
-		TeleportTo(GameMode->GetSpawnLevel(), GetActorRotation());
-	}
-
-	
+		GameMode->TeleportPlayers(0);
+	}	
 }
-

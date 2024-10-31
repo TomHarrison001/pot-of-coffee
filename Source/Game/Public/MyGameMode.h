@@ -20,18 +20,17 @@ public:
 	void PadActivated();
 	void PadDeactivated();
 
+	AActor* Players[2];
 	bool TeleportReady();
-	FVector GetSpawnLevel();
-
+	FVector GetLevelStartPos(int player, int level);
+	void TeleportPlayers(int level);
 
 private:
-
 	UPROPERTY(VisibleAnywhere, Category = "Pads")
 	int PadsActivated;
 
 	UPROPERTY(VisibleAnywhere, Category = "Levels")
-	FVector LevelPositionsPlayer0[10] = { FVector(0.0f,-4150.0f,5.f) };
-	FVector LevelPositionsPlayer1[10] = { FVector(0.0f,-4150.0f,5.f) };
+	FVector StartPositions[20] = { FVector(0.0f, -5800.0f, 5.f), FVector(0.0f, -4400.0f, 5.f) };
 
 	int Player0Score;
 	int Player1Score;
