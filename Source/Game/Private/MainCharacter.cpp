@@ -30,6 +30,13 @@ void AMainCharacter::BeginPlay()
 void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	AMyGameMode* GameMode = Cast<AMyGameMode>(GetWorld()->GetAuthGameMode());
+
+	if (GameMode->timerActive)
+	{
+		GameMode->timer += DeltaTime;
+	}
 }
 
 // Called to bind functionality to input
@@ -100,39 +107,4 @@ FString AMainCharacter::GetTag()
 		return Tags[0].ToString();
 	}
 	return FString("No Tags");
-}
-
-//Start teleport countdown
-void AMainCharacter::StartTeleportTimer()
-{
-	//Set timer to 5 seconds, and start the timer (5 mins)
-	GLog->Log("Game Starting!");
-	GetWorldTimerManager().ClearTimer(LoopedTimerHandle);
-	TimedLoopsRemaining = 5;
-	GetWorldTimerManager().SetTimer(LoopedTimerHandle, this, &AMainCharacter::EndTeleportTimer, 1.0f, true, 1.0f);
-}
-
-//Timer finished, teleport
-void AMainCharacter::EndTeleportTimer()
-{
-	AMyGameMode* GameMode = Cast<AMyGameMode>(GetWorld()->GetAuthGameMode());
-
-	//Log seconds till teleport repeatidly
-	GLog->Log(FString::FromInt(TimedLoopsRemaining));
-	
-	//If not all pads are active during teleport sequence, interupt and cancel teleport
-	if (!GameMode->TeleportReady())
-	{
-		GetWorldTimerManager().ClearTimer(LoopedTimerHandle);
-		GLog->Log("Teleport Aborted... Remain on pads to telport.");
-	}
-	else if (--TimedLoopsRemaining < 0)
-	{
-		//Teleport the main char
-		GetWorldTimerManager().ClearTimer(LoopedTimerHandle);
-		GLog->Log("Teleporting...");
-
-		GameMode->GetScore();
-		GameMode->TeleportPlayers(0);
-	}	
 }

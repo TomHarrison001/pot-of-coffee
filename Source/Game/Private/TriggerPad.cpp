@@ -10,9 +10,7 @@ ATriggerPad::ATriggerPad()
 	DefaultSceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("TriggerPadSceneComponent"));
 
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TriggerPadMeshComponent"));
-
 	StaticMesh->SetCollisionResponseToAllChannels(ECR_Overlap); //Set Mesh Collision to Overlap
-
 	StaticMesh->AttachToComponent(DefaultSceneRoot, FAttachmentTransformRules::KeepRelativeTransform);
 
 	//Register Events
@@ -36,7 +34,7 @@ void ATriggerPad::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
 {
 	// Check if OtherActor is valid and can be cast to AMainCharacter
 	AMainCharacter* MainChar = Cast<AMainCharacter>(OtherActor);
-	if (MainChar)
+	if (MainChar != nullptr)
 	{
 		//Only activate the pad if tags match
 		if (ActivationTag == MainChar->GetTag())
@@ -45,16 +43,12 @@ void ATriggerPad::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
 			GLog->Log(MainChar->GetTag() + " Stepped on the pad");
 			ChangePadColour(ActiveColour);
 
-			//Set pad to on
-			//Check if can teleport, and if can, teleport
+			// Set pad to on
+			// Check if can teleport, and if can, teleport
 			PadOn = true;
 			AMyGameMode* GameMode = Cast<AMyGameMode>(GetWorld()->GetAuthGameMode());
 			GameMode->PadActivated();
 			GameMode->Players[(ActivationTag == "Player0") ? 0 : 1] = MainChar;
-			if (GameMode->TeleportReady())
-			{
-				MainChar->StartTeleportTimer();
-			}
 		}
 		else
 		{
@@ -80,19 +74,13 @@ void ATriggerPad::ChangePadColour(FLinearColor NewColour)
 	{
 		//Find the cube relating to the trigger volume
 		//WARNING - Will break if any other StaticMeshes are added to trigger vol
-		UStaticMeshComponent* Cube = StaticMesh;
+		UMaterialInstanceDynamic* CubeMat = StaticMesh->CreateAndSetMaterialInstanceDynamic(0);
 
-		if (Cube != nullptr)
+		if (CubeMat != nullptr)
 		{
-			//Create a new material (dynamic material) that can be changed during gameplay
-			UMaterialInstanceDynamic* CubeMaterial = Cube->CreateAndSetMaterialInstanceDynamic(0);
-
-			if (CubeMaterial != nullptr)
-			{
-				//Change pad colour
-				CubeMaterial->SetVectorParameterValue(FName("Color"), NewColour);
-				GLog->Log("Change pad colour to " + FString(NewColour.ToString()));
-			}
+			//Change pad colour
+			CubeMat->SetVectorParameterValue(FName("Color"), NewColour);
+			GLog->Log("Change pad colour to " + FString(NewColour.ToString()));
 		}
 	}
 }

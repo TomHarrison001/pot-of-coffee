@@ -57,9 +57,4 @@ public:
 
 	// Called for movement input
 	void Move(const FInputActionValue& Value);
-
-	void StartTeleportTimer();
-	void EndTeleportTimer();
-	FTimerHandle LoopedTimerHandle;
-	int32 TimedLoopsRemaining;
 };

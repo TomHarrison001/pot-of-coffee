@@ -10,24 +10,29 @@ void AMyGameMode::BeginPlay()
 
 	// Create local multiplayer mode
 	ULocalPlayer* LocalPlayer = World->GetGameInstance()->CreateLocalPlayer(1, error, true);
+
+	TimedLoopsRemaining = 3;
+	timerActive = false;
 }
 
-void AMyGameMode::Player0Scored()
+void AMyGameMode::IncrementScore(int player)
 {
-	Player0Score++;
-}
-
-void AMyGameMode::Player1Scored()
-{
-	Player1Score++;
+	if (player == 0)
+	{
+		P1Score++;
+	}
+	else
+	{
+		P2Score++;
+	}
 }
 
 void AMyGameMode::GetScore()
 {
 	if (GEngine)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Green, FString::Printf(TEXT("Player 2 score: %i"), Player1Score));
-		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Green, FString::Printf(TEXT("Player 1 score: %i"), Player0Score));
+		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Green, FString::Printf(TEXT("P1 score: %i"), P1Score));
+		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Green, FString::Printf(TEXT("P2 score: %i"), P2Score));
 	}
 }
 
@@ -40,7 +45,7 @@ bool AMyGameMode::TeleportReady()
 // Return start position for level
 FVector AMyGameMode::GetLevelStartPos(int player, int level)
 {
-	return StartPositions[level * 2 + player];
+	return StartPositions[player + level * 2];
 }
 
 void AMyGameMode::TeleportPlayers(int level)
@@ -54,9 +59,64 @@ void AMyGameMode::TeleportPlayers(int level)
 void AMyGameMode::PadActivated()
 {
 	PadsActivated++;
+	
+	if (TeleportReady())
+	{
+		StartTeleportTimer();
+	}
 }
 
 void AMyGameMode::PadDeactivated()
 {
 	PadsActivated--;
+}
+
+//Start teleport countdown
+void AMyGameMode::StartTeleportTimer()
+{
+	//Set timer to 3 seconds, and start the timer (5 mins)
+	GLog->Log("Game Starting!");
+	GetWorldTimerManager().ClearTimer(LoopedTimerHandle);
+	GetWorldTimerManager().SetTimer(LoopedTimerHandle, this, &AMyGameMode::EndTeleportTimer, 1.0f, true, 1.0f);
+}
+
+//Timer finished, teleport
+void AMyGameMode::EndTeleportTimer()
+{
+	//Log seconds till teleport repeatidly
+	GLog->Log(FString::FromInt(TimedLoopsRemaining));
+
+	//If not all pads are active during teleport sequence, interupt and cancel teleport
+	if (!TeleportReady())
+	{
+		GetWorldTimerManager().ClearTimer(LoopedTimerHandle);
+		GLog->Log("Teleport Aborted... Remain on pads to telport.");
+		TimedLoopsRemaining = 3;
+	}
+	else if (--TimedLoopsRemaining < 0)
+	{
+		//Teleport the main char
+		GetWorldTimerManager().ClearTimer(LoopedTimerHandle);
+		TimedLoopsRemaining = 3;
+		GLog->Log("Teleporting...");
+
+		GetScore();
+		TeleportPlayers(0);
+		ResetLevel();
+	}
+}
+
+// teleports to level and resets timer
+void AMyGameMode::ResetLevel()
+{
+	timer = 0;
+	timerActive = true;
+}
+
+// determines winner and returns players to lobby
+void AMyGameMode::EndLevel(int winner)
+{
+	timerActive = false;
+	IncrementScore(winner);
+	TeleportPlayers(1);
 }
