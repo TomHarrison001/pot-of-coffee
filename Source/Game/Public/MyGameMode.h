@@ -14,7 +14,6 @@ protected:
 
 public:
 	void IncrementScore(int player);
-	void GetScore();
 
 	void PadActivated();
 	void PadDeactivated();
@@ -25,19 +24,31 @@ public:
 
 	AActor* Players[2];
 	bool TeleportReady();
-	FVector GetLevelStartPos(int player, int level);
-	void TeleportPlayers(int level);
+	FVector GetLevelStartPos(int player);
+	void TeleportPlayers();
 
 	void ResetLevel();
 	void EndLevel(int winner);
 
 private:
-	UPROPERTY(VisibleAnywhere, Category = "Pads")
-	int PadsActivated;
+	UPROPERTY(VisibleAnywhere, Category = "Levels")
+	int ActiveLevel;
 
 	UPROPERTY(VisibleAnywhere, Category = "Levels")
 	FVector StartPositions[20] = { FVector(-20.f, -180.f, 90.f), FVector(-20.f, 180.f, 90.f),
-		FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f) };
+		FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f),
+		FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f),
+		FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f),
+		FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f),
+		FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f),
+		FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f),
+		FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f),
+		FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f),
+		FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f)
+	};
+
+	UPROPERTY(VisibleAnywhere, Category = "Pads")
+	int PadsActivated;
 
 public:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category="HUD")

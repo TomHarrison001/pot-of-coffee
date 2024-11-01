@@ -34,17 +34,18 @@ bool AMyGameMode::TeleportReady()
 }
 
 // Return start position for level
-FVector AMyGameMode::GetLevelStartPos(int player, int level)
+FVector AMyGameMode::GetLevelStartPos(int player)
 {
-	return StartPositions[player + level * 2];
+	int index = player + ActiveLevel * 2;
+	return StartPositions[index];
 }
 
-void AMyGameMode::TeleportPlayers(int level)
+void AMyGameMode::TeleportPlayers()
 {
 	AActor* Player = Players[0];
-	Player->TeleportTo(GetLevelStartPos(0, level), Player->GetActorRotation());
+	Player->TeleportTo(GetLevelStartPos(0), Player->GetActorRotation());
 	Player = Players[1];
-	Player->TeleportTo(GetLevelStartPos(1, level), Player->GetActorRotation());
+	Player->TeleportTo(GetLevelStartPos(1), Player->GetActorRotation());
 }
 
 void AMyGameMode::PadActivated()
@@ -90,7 +91,9 @@ void AMyGameMode::EndTeleportTimer()
 		GetWorldTimerManager().ClearTimer(LoopedTimerHandle);
 		TimedLoopsRemaining = 3;
 		GLog->Log("Teleporting...");
-		TeleportPlayers(1);
+		ActiveLevel = FMath::RandRange(1, 9);
+		GLog->Log(*FString::Printf(TEXT("ACTIVE LEVEL: %i"), ActiveLevel));
+		TeleportPlayers();
 		ResetLevel();
 	}
 }
@@ -107,5 +110,6 @@ void AMyGameMode::EndLevel(int winner)
 {
 	timerActive = false;
 	IncrementScore(winner);
-	TeleportPlayers(0);
+	ActiveLevel = 0;
+	TeleportPlayers();
 }
