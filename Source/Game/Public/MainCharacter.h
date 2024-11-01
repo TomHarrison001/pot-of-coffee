@@ -3,6 +3,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "MyGameMode.h"
 #include "MainCharacter.generated.h"
 
@@ -25,6 +27,10 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
+	// FPS camera
+	UPROPERTY(VisibleAnywhere, Category = "Camera")
+	UCameraComponent* FPSCameraComponent;
 
 	// Mapping Context file
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
