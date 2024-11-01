@@ -1,32 +1,37 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
-#include "Engine/TriggerVolume.h"
+#include "GameFramework/Actor.h"
 #include "MyGameMode.h"
+#include "MainCharacter.h"
 #include "Checkpoint.generated.h"
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class GAME_API UCheckpoint : public UActorComponent
+UCLASS()
+class GAME_API ACheckpoint : public AActor
 {
 	GENERATED_BODY()
-
+	
 public:	
-	// Sets default values for this component's properties
-	UCheckpoint();
+	// Sets default values for this actor's properties
+	ACheckpoint();
 
 protected:
-	// Called when the game starts
+	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:	
 	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void Tick(float DeltaTime) override;
 
-    void GetAllValidActors(float DeltaTime);
+	// Allows child components to move freely
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Default")
+	USceneComponent* DefaultSceneRoot;
 
-private:
-	UPROPERTY(EditAnywhere, Category = "Default")
-	ATriggerVolume* TriggerVol;
+	// Collectable static mesh
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Default")
+	UStaticMeshComponent* StaticMesh;
 
+	// overlap begin function
+	UFUNCTION()
+	void OnOverlapBegin(class AActor* OverlappedActor, class AActor* OtherActor);
 };
