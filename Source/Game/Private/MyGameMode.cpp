@@ -27,15 +27,6 @@ void AMyGameMode::IncrementScore(int player)
 	}
 }
 
-void AMyGameMode::GetScore()
-{
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Green, FString::Printf(TEXT("P1 score: %i"), P1Score));
-		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Green, FString::Printf(TEXT("P2 score: %i"), P2Score));
-	}
-}
-
 //Return true if player can teleport
 bool AMyGameMode::TeleportReady()
 {
@@ -99,9 +90,7 @@ void AMyGameMode::EndTeleportTimer()
 		GetWorldTimerManager().ClearTimer(LoopedTimerHandle);
 		TimedLoopsRemaining = 3;
 		GLog->Log("Teleporting...");
-
-		GetScore();
-		TeleportPlayers(0);
+		TeleportPlayers(1);
 		ResetLevel();
 	}
 }
@@ -118,5 +107,5 @@ void AMyGameMode::EndLevel(int winner)
 {
 	timerActive = false;
 	IncrementScore(winner);
-	TeleportPlayers(1);
+	TeleportPlayers(0);
 }

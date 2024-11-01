@@ -36,8 +36,8 @@ private:
 	int PadsActivated;
 
 	UPROPERTY(VisibleAnywhere, Category = "Levels")
-	FVector StartPositions[20] = { FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f),
-		FVector(-20.f, -180.f, 90.f), FVector(-20.f, 180.f, 90.f) };
+	FVector StartPositions[20] = { FVector(-20.f, -180.f, 90.f), FVector(-20.f, 180.f, 90.f),
+		FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f) };
 
 public:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category="HUD")
