@@ -36,15 +36,15 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Levels")
 	FVector StartPositions[20] = { FVector(-20.f, -180.f, 90.f), FVector(-20.f, 180.f, 90.f),
-		FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f),
-		FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f),
-		FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f),
-		FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f),
-		FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f),
-		FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f),
-		FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f),
-		FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f),
-		FVector(0.f, -5800.f, 5.f), FVector(0.f, -4400.f, 5.f)
+		FVector(-400.f, 2600.f, 10.f), FVector(-400.f, 4000.f, 10.f),
+		FVector(-500.f, 6400.f, 10.f), FVector(-500.f, 7800.f, 10.f),
+		FVector(-500.f, 6400.f, 10.f), FVector(-500.f, 7800.f, 10.f),
+		FVector(-500.f, 6400.f, 10.f), FVector(-500.f, 7800.f, 10.f),
+		FVector(-500.f, 6400.f, 10.f), FVector(-500.f, 7800.f, 10.f),
+		FVector(-500.f, 6400.f, 10.f), FVector(-500.f, 7800.f, 10.f),
+		FVector(-500.f, 6400.f, 10.f), FVector(-500.f, 7800.f, 10.f),
+		FVector(-500.f, 6400.f, 10.f), FVector(-500.f, 7800.f, 10.f),
+		FVector(-500.f, 6400.f, 10.f), FVector(-500.f, 7800.f, 10.f)
 	};
 
 	UPROPERTY(VisibleAnywhere, Category = "Pads")
