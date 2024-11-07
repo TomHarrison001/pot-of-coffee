@@ -59,11 +59,20 @@ void ATriggerPad::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
 
 void ATriggerPad::OnOverlapEnd(AActor* OverlappedActor, AActor* OtherActor)
 {
-	//When stepped off, change back to red
-	ChangePadColour(InactiveColour);
-	PadOn = false;
-	AMyGameMode* GameMode = Cast<AMyGameMode>(GetWorld()->GetAuthGameMode());
-	GameMode->PadDeactivated();
+	// Check if OtherActor is valid and can be cast to AMainCharacter
+	AMainCharacter* MainChar = Cast<AMainCharacter>(OtherActor);
+	if (MainChar != nullptr)
+	{
+		//Only activate the pad if tags match
+		if (ActivationTag == MainChar->GetTag())
+		{
+			//When stepped off, change back to red
+			ChangePadColour(InactiveColour);
+			PadOn = false;
+			AMyGameMode* GameMode = Cast<AMyGameMode>(GetWorld()->GetAuthGameMode());
+			GameMode->PadDeactivated();
+		}
+	}
 }
 
 //Change pad colour
