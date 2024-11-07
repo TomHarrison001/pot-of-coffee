@@ -13,6 +13,9 @@ void AMyGameMode::BeginPlay()
 
 	TimedLoopsRemaining = 3;
 	timerActive = false;
+	
+
+	ShuffleArray(SpawnPositionsActive);
 }
 
 void AMyGameMode::IncrementScore(int player)
@@ -36,14 +39,28 @@ bool AMyGameMode::TeleportReady()
 // Return start position for level
 FVector AMyGameMode::GetLevelStartPos(int player)
 {
-	int index = player + ActiveLevel * 2;
-	return StartPositions[index];
+	
+	switch (player)
+	{
+	case 0:
+		return SpawnPositionsActive[0].player0;
+
+		break;
+	case 1:
+		return SpawnPositionsActive[0].player1;
+
+		break;
+	default:
+		GLog->Log("ERROR - No player arg given for GetLevelStartPos function!");
+		return FVector(0.0f,0.0f,10.0f);
+	}
 }
 
 void AMyGameMode::TeleportPlayers()
 {
 	AActor* Player = Players[0];
 	Player->TeleportTo(GetLevelStartPos(0), Player->GetActorRotation());
+	GLog->Log("Teleporting to " + FString(GetLevelStartPos(0).ToString()));
 	Player = Players[1];
 	Player->TeleportTo(GetLevelStartPos(1), Player->GetActorRotation());
 }
@@ -92,7 +109,7 @@ void AMyGameMode::EndTeleportTimer()
 		TimedLoopsRemaining = 3;
 		GLog->Log("Teleporting...");
 		ActiveLevel = FMath::RandRange(1, 9);
-		GLog->Log(*FString::Printf(TEXT("ACTIVE LEVEL: %i"), ActiveLevel));
+		//GLog->Log(*FString::Printf(TEXT("ACTIVE LEVEL: %i"), ActiveLevel));
 		TeleportPlayers();
 		ResetLevel();
 	}
@@ -112,4 +129,14 @@ void AMyGameMode::EndLevel(int winner)
 	IncrementScore(winner);
 	ActiveLevel = 0;
 	TeleportPlayers();
+}
+
+void AMyGameMode::ShuffleArray(TArray<FLevelLocations>& array)
+{
+	// Manual Fisher-Yates shuffle
+	for (int32 i = array.Num() - 1; i > 0; --i)
+	{
+		int32 j = FMath::RandRange(0, i);
+		array.Swap(i, j);
+	}
 }
