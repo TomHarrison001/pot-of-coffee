@@ -4,18 +4,6 @@
 #include "GameFramework/GameModeBase.h"
 #include "MyGameMode.generated.h"
 
-USTRUCT(BlueprintType)
-struct FLevelLocations
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Struct")
-	FVector player0;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Struct")
-	FVector player1;
-};
-
 UCLASS()
 class GAME_API AMyGameMode : public AGameModeBase
 {
@@ -36,7 +24,7 @@ public:
 
 	AActor* Players[2];
 	bool TeleportReady();
-	FVector GetLevelStartPos(int player);
+	FVector GetLevelStartPos(int player); // returns player 1 or 2 start position for ActiveLevel
 	void TeleportPlayers();
 
 	void ResetLevel();
@@ -47,19 +35,28 @@ private:
 	int ActiveLevel;
 
 	UPROPERTY(VisibleAnywhere, Category = "Levels")
-	TArray<FLevelLocations> SpawnPositions =
-	{
-		{FVector(-400.0f,2600.0f,10.0f),FVector(-400.0f,4000.0f,10.0f)},
-		{FVector(-500.0f,6400.0f,10.0f),FVector(-500.0f,7800.0f,10.0f)}
+	FVector StartPositions[20] = { FVector(-20.f, -180.f, 90.f), FVector(-20.f, 180.f, 90.f),  // player 1 spawn, player 2 spawn
+		FVector(-400.f, 2600.f, 10.f), FVector(-400.f, 4000.f, 10.f),                          // player 1 level 1, player 2 level 1
+		FVector(-500.f, 6400.f, 10.f), FVector(-500.f, 7800.f, 10.f),                          // player 1 level 2, player 2 level 2
+		FVector(-500.f, 9200.f, 10.f), FVector(-500.f, 9400.f, 10.f),                          // player 1 level 3, player 2 level 3
+		FVector(-500.f, 9200.f, 10.f), FVector(-500.f, 9400.f, 10.f),                          // spare - usued
+		FVector(-500.f, 9200.f, 10.f), FVector(-500.f, 9400.f, 10.f),                          // spare - usued
+		FVector(-500.f, 9200.f, 10.f), FVector(-500.f, 9400.f, 10.f),                          // spare - usued
+		FVector(-500.f, 9200.f, 10.f), FVector(-500.f, 9400.f, 10.f),                          // spare - usued
+		FVector(-500.f, 9200.f, 10.f), FVector(-500.f, 9400.f, 10.f),                          // spare - usued
+		FVector(-500.f, 9200.f, 10.f), FVector(-500.f, 9400.f, 10.f)                           // spare - usued
 	};
 
-	TArray<FLevelLocations>SpawnPositionsActive = SpawnPositions;
+	// array containing index of played levels
+	// TO-DO: empty array when player reaches 5 points
+	UPROPERTY(VisibleAnywhere, Category = "Levels")
+	TArray<int> PlayedLevels;
 
 	UPROPERTY(VisibleAnywhere, Category = "Pads")
 	int PadsActivated;
 
-	void ShuffleArray(TArray<FLevelLocations>& array);
-
+	// function returning if level is found in PlayedLevels array
+	bool PlayedLevel();
 
 public:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category="HUD")

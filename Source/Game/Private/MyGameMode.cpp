@@ -13,9 +13,6 @@ void AMyGameMode::BeginPlay()
 
 	TimedLoopsRemaining = 3;
 	timerActive = false;
-	
-
-	ShuffleArray(SpawnPositionsActive);
 }
 
 void AMyGameMode::IncrementScore(int player)
@@ -39,30 +36,16 @@ bool AMyGameMode::TeleportReady()
 // Return start position for level
 FVector AMyGameMode::GetLevelStartPos(int player)
 {
-	
-	switch (player)
-	{
-	case 0:
-		return SpawnPositionsActive[0].player0;
-
-		break;
-	case 1:
-		return SpawnPositionsActive[0].player1;
-
-		break;
-	default:
-		GLog->Log("ERROR - No player arg given for GetLevelStartPos function!");
-		return FVector(0.0f,0.0f,10.0f);
-	}
+	int index = player + ActiveLevel * 2;
+	return StartPositions[index];
 }
 
 void AMyGameMode::TeleportPlayers()
 {
 	AActor* Player = Players[0];
-	Player->TeleportTo(GetLevelStartPos(0), Player->GetActorRotation());
-	GLog->Log("Teleporting to " + FString(GetLevelStartPos(0).ToString()));
+	Player->TeleportTo(GetLevelStartPos(0), FRotator(0.f, 0.f, 0.f));
 	Player = Players[1];
-	Player->TeleportTo(GetLevelStartPos(1), Player->GetActorRotation());
+	Player->TeleportTo(GetLevelStartPos(1), FRotator(0.f, 0.f, 0.f));
 }
 
 void AMyGameMode::PadActivated()
@@ -109,8 +92,12 @@ void AMyGameMode::EndTeleportTimer()
 		TimedLoopsRemaining = 3;
 		GLog->Log("Teleporting...");
 		ActiveLevel = FMath::RandRange(1, 9);
-		//GLog->Log(*FString::Printf(TEXT("ACTIVE LEVEL: %i"), ActiveLevel));
+		while (PlayedLevel()) {
+			ActiveLevel = FMath::RandRange(1, 9);
+		}
+		GLog->Log(*FString::Printf(TEXT("ACTIVE LEVEL: %i"), ActiveLevel));
 		TeleportPlayers();
+		PlayedLevels.Add(ActiveLevel);
 		ResetLevel();
 	}
 }
@@ -131,12 +118,15 @@ void AMyGameMode::EndLevel(int winner)
 	TeleportPlayers();
 }
 
-void AMyGameMode::ShuffleArray(TArray<FLevelLocations>& array)
+// function returning if level is found in PlayedLevels array
+bool AMyGameMode::PlayedLevel()
 {
-	// Manual Fisher-Yates shuffle
-	for (int32 i = array.Num() - 1; i > 0; --i)
+	for (int i : PlayedLevels)
 	{
-		int32 j = FMath::RandRange(0, i);
-		array.Swap(i, j);
+		if (ActiveLevel == i)
+		{
+			return true;
+		}
 	}
+	return false;
 }
