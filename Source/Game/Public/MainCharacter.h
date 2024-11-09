@@ -6,7 +6,11 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "MyGameMode.h"
+#include "Gun.h"
+#include <Kismet/GameplayStatics.h>
 #include "MainCharacter.generated.h"
+
+class AGun;
 
 UCLASS()
 class GAME_API AMainCharacter : public ACharacter
@@ -63,6 +67,13 @@ public:
 
 	// Called for movement input
 	void Move(const FInputActionValue& Value);
+
+	// Gun Class
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AGun> GunClass;
+
+	UPROPERTY()
+	AGun* Gun;
 
 	// Gun Collected Bool (used for animations)
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animations")
