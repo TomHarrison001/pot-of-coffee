@@ -63,4 +63,14 @@ public:
 
 	// Called for movement input
 	void Move(const FInputActionValue& Value);
+
+	// Gun Collected Bool (used for animations)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animations")
+	bool b_gunCollected;
+
+	// Gun Collected Function
+	void GunCollected();
+
+	// Gun Dropped Function
+	void GunDropped();
 };

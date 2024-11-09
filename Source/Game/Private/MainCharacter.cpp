@@ -47,7 +47,7 @@ void AMainCharacter::Tick(float DeltaTime)
 
 	AMyGameMode* GameMode = Cast<AMyGameMode>(GetWorld()->GetAuthGameMode());
 
-	if (GameMode->timerActive)
+	if (GameMode->timerActive && GetTag() == "Player0")
 	{
 		GameMode->timer += DeltaTime;
 	}
@@ -126,4 +126,18 @@ FString AMainCharacter::GetTag()
 		return Tags[0].ToString();
 	}
 	return FString("No Tags");
+}
+
+void AMainCharacter::GunCollected()
+{
+	b_gunCollected = true;
+
+	Gun = GetWorld()->SpawnActor<AGun>(GunClass);
+	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("GunSocket"));
+	Gun->SetOwner(this);
+}
+
+void AMainCharacter::GunDropped()
+{
+	b_gunCollected = false;
 }
