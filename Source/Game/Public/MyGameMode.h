@@ -30,6 +30,7 @@ public:
 	void ResetLevel();
 	void EndLevel(int winner);
 
+
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Levels")
 	int ActiveLevel;

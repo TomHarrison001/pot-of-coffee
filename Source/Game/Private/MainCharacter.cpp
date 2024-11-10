@@ -38,6 +38,9 @@ void AMainCharacter::BeginPlay()
 
 	// The owning player doesn't see the regular (third-person) body mesh.
 	GetMesh()->SetOwnerNoSee(true);
+
+	//Set Norm jump height
+	NormJumpHeight = GetCharacterMovement()->JumpZVelocity;
 }
 
 // Called every frame

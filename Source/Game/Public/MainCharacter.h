@@ -8,6 +8,7 @@
 #include "MyGameMode.h"
 #include "Gun.h"
 #include <Kismet/GameplayStatics.h>
+#include "GameFramework/CharacterMovementComponent.h"
 #include "MainCharacter.generated.h"
 
 class AGun;
@@ -84,4 +85,7 @@ public:
 
 	// Gun Dropped Function
 	void GunDropped();
+
+	//Normal Jump Height 
+	float NormJumpHeight;
 };
