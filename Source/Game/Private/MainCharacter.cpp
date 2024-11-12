@@ -20,6 +20,9 @@ AMainCharacter::AMainCharacter()
 	
 	// Enable the pawn to control camera rotation.
 	FPSCameraComponent->bUsePawnControlRotation = true;
+
+	// Sets collision event
+	OnActorBeginOverlap.AddDynamic(this, &AMainCharacter::OnOverlapBegin);
 }
 
 // Called when the game starts or when spawned
@@ -55,7 +58,7 @@ void AMainCharacter::Tick(float DeltaTime)
 		GameMode->timer += DeltaTime;
 	}
 
-	if (GetActorLocation().Z < -200.f)
+	if (GetActorLocation().Z < -800.f)
 	{
 		TeleportTo(GameMode->GetLevelStartPos((GetTag() == "Player0") ? 0 : 1), GetActorRotation());
 	}
@@ -77,6 +80,9 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 		// Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AMainCharacter::Move);
+
+		// Shoot
+		EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Triggered, this, &AMainCharacter::Shoot);
 	}
 }
 
@@ -121,6 +127,45 @@ void AMainCharacter::Move(const FInputActionValue& Value)
 	}
 }
 
+void AMainCharacter::Shoot()
+{
+	// Attempt to shoot a projectile.
+	if (ProjectileClass && GunCollected)
+	{
+		// Get the camera transform.
+		FVector CameraLocation;
+		FRotator CameraRotation;
+		GetActorEyesViewPoint(CameraLocation, CameraRotation);
+
+		// Set MuzzleOffset to spawn projectiles slightly in front of the camera.
+		MuzzleOffset.Set(100.0f, 0.0f, 50.0f);
+
+		// Transform MuzzleOffset from camera space to world space.
+		FVector MuzzleLocation = CameraLocation + FTransform(CameraRotation).TransformVector(MuzzleOffset);
+
+		FRotator MuzzleRotation = CameraRotation;
+		// Skew the aim to be slightly upwards if required.
+		// MuzzleRotation.Pitch += 5.0f;
+
+		UWorld* World = GetWorld();
+		if (World)
+		{
+			FActorSpawnParameters SpawnParams;
+			SpawnParams.Owner = this;
+			SpawnParams.Instigator = GetInstigator();
+
+			// Spawn the projectile at the muzzle.
+			AProjectile* Projectile = World->SpawnActor<AProjectile>(ProjectileClass, MuzzleLocation, MuzzleRotation, SpawnParams);
+			if (Projectile)
+			{
+				// Set the projectile's initial trajectory.
+				FVector LaunchDirection = MuzzleRotation.Vector();
+				Projectile->FireInDirection(LaunchDirection);
+			}
+		}
+	}
+}
+
 //Returns the first tag, returns no tags if there are no tags in first slot
 FString AMainCharacter::GetTag()
 {
@@ -131,16 +176,27 @@ FString AMainCharacter::GetTag()
 	return FString("No Tags");
 }
 
-void AMainCharacter::GunCollected()
+void AMainCharacter::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
 {
-	b_gunCollected = true;
+	AProjectile* Projectile = Cast<AProjectile>(OtherActor);
+
+	if (Projectile != nullptr)
+	{
+		FVector direction = Projectile->GetVelocity();
+		GetMesh()->AddImpulse(FVector(direction.X, direction.Y, 1.0f) * 100.0f);
+	}
+}
+
+void AMainCharacter::CollectGun()
+{
+	GunCollected = true;
 
 	Gun = GetWorld()->SpawnActor<AGun>(GunClass);
 	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("GunSocket"));
 	Gun->SetOwner(this);
 }
 
-void AMainCharacter::GunDropped()
+void AMainCharacter::DropGun()
 {
-	b_gunCollected = false;
+	GunCollected = false;
 }

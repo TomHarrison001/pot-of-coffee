@@ -7,6 +7,7 @@
 #include "Components/CapsuleComponent.h"
 #include "MyGameMode.h"
 #include "Gun.h"
+#include "Projectile.h"
 #include <Kismet/GameplayStatics.h>
 #include "GameFramework/CharacterMovementComponent.h"
 #include "MainCharacter.generated.h"
@@ -53,6 +54,21 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	class UInputAction* MoveAction;
 
+	// Shoot Input Action
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	class UInputAction* ShootAction;
+
+	// Gun muzzle offset from the camera location
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
+	FVector MuzzleOffset;
+
+	// Projectile class to spawn
+	UPROPERTY(EditDefaultsOnly, Category = "Projectile")
+	TSubclassOf<class AProjectile> ProjectileClass;
+
+	// Called for Shoot input
+	void Shoot();
+
 	// Reference blueprint self
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Actor")
 	AActor* self;
@@ -62,6 +78,10 @@ public:
 
 	//Return tag
 	FString GetTag();
+
+	// Overlap begin function - projectile
+	UFUNCTION()
+	void OnOverlapBegin(class AActor* OverlappedActor, class AActor* OtherActor);
 
 	// Called for looking input
 	void Look(const FInputActionValue& Value);
@@ -78,13 +98,13 @@ public:
 
 	// Gun Collected Bool (used for animations)
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animations")
-	bool b_gunCollected;
+	bool GunCollected;
 
 	// Gun Collected Function
-	void GunCollected();
+	void CollectGun();
 
 	// Gun Dropped Function
-	void GunDropped();
+	void DropGun();
 
 	//Normal Jump Height 
 	float NormJumpHeight;
