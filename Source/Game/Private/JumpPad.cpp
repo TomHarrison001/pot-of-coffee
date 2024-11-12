@@ -40,6 +40,7 @@ void AJumpPad::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
 {
 	AMainCharacter* MainChar = Cast<AMainCharacter>(OtherActor);
 	MainChar->GetCharacterMovement()->JumpZVelocity = JumpHeight;
+	MainChar->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
 	MainChar->Jump();
 }
 
