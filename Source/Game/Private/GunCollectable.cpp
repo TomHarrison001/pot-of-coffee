@@ -41,7 +41,6 @@ void AGunCollectable::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor
 		AMainCharacter* MainChar = Cast<AMainCharacter>(OtherActor);
 
 		MainChar->CollectGun();
-		Destroy();
 	}
 }
 

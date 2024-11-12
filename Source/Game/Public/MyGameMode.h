@@ -40,12 +40,12 @@ private:
 		FVector(-400.f, 2600.f, 10.f), FVector(-400.f, 4000.f, 10.f),                          // player 1 level 1, player 2 level 1
 		FVector(-500.f, 6400.f, 10.f), FVector(-500.f, 7800.f, 10.f),                          // player 1 level 2, player 2 level 2
 		FVector(-500.f, 9200.f, 10.f), FVector(-500.f, 9400.f, 10.f),                          // player 1 level 3, player 2 level 3
-		FVector(-500.f, 9200.f, 10.f), FVector(-500.f, 9400.f, 10.f),                          // spare - usued
-		FVector(-500.f, 9200.f, 10.f), FVector(-500.f, 9400.f, 10.f),                          // spare - usued
-		FVector(-500.f, 9200.f, 10.f), FVector(-500.f, 9400.f, 10.f),                          // spare - usued
-		FVector(-500.f, 9200.f, 10.f), FVector(-500.f, 9400.f, 10.f),                          // spare - usued
-		FVector(-500.f, 9200.f, 10.f), FVector(-500.f, 9400.f, 10.f),                          // spare - usued
-		FVector(-500.f, 9200.f, 10.f), FVector(-500.f, 9400.f, 10.f)                           // spare - usued
+		FVector(-570.f, 12300.f, 10.f), FVector(-500.f, 12500.f, 10.f),                        // player 1 level 4, player 2 level 4
+		FVector(-570.f, 12300.f, 10.f), FVector(-500.f, 12500.f, 10.f),                        // spare - usued
+		FVector(-570.f, 12300.f, 10.f), FVector(-500.f, 12500.f, 10.f),                        // spare - usued
+		FVector(-570.f, 12300.f, 10.f), FVector(-500.f, 12500.f, 10.f),                        // spare - usued
+		FVector(-570.f, 12300.f, 10.f), FVector(-500.f, 12500.f, 10.f),                        // spare - usued
+		FVector(-570.f, 12300.f, 10.f), FVector(-500.f, 12500.f, 10.f),                        // spare - usued
 	};
 
 	// array containing index of played levels
