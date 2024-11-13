@@ -39,11 +39,13 @@ void ACheckpoint::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
 		{
 			AMyGameMode* GameMode = Cast<AMyGameMode>(GetWorld()->GetAuthGameMode());
 			GameMode->EndLevel(0);
+
 		}
 		if (MainChar->GetTag() == "Player1")
 		{
 			AMyGameMode* GameMode = Cast<AMyGameMode>(GetWorld()->GetAuthGameMode());
 			GameMode->EndLevel(1);
+		
 		}
 	}
 }

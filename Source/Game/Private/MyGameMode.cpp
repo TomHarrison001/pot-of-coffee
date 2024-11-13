@@ -116,6 +116,15 @@ void AMyGameMode::EndLevel(int winner)
 	IncrementScore(winner);
 	ActiveLevel = 0;
 	TeleportPlayers();
+	
+
+	if (P1Score >= 5 || P2Score >= 5)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Green, FString::Printf(TEXT("Game Ended. A player has won.")));
+		GLog->Log("Game ended because a player won.");
+		GLog->Log("Restarting...");
+		UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+	}
 }
 
 // function returning if level is found in PlayedLevels array
@@ -130,3 +139,4 @@ bool AMyGameMode::PlayedLevel()
 	}
 	return false;
 }
+

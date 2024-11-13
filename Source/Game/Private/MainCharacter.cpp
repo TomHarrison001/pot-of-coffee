@@ -62,6 +62,7 @@ void AMainCharacter::Tick(float DeltaTime)
 	{
 		TeleportTo(GameMode->GetLevelStartPos((GetTag() == "Player0") ? 0 : 1), GetActorRotation());
 	}
+
 }
 
 // Called to bind functionality to input

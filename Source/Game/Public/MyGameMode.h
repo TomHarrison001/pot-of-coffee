@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include <Kismet/GameplayStatics.h>
 #include "MyGameMode.generated.h"
 
 UCLASS()
@@ -37,15 +38,16 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Levels")
 	FVector StartPositions[20] = { FVector(-20.f, -180.f, 90.f), FVector(-20.f, 180.f, 90.f),  // player 1 spawn, player 2 spawn
-		FVector(-400.f, 2600.f, 10.f), FVector(-400.f, 4000.f, 10.f),                          // player 1 level 1, player 2 level 1
-		FVector(-500.f, 6400.f, 10.f), FVector(-500.f, 7800.f, 10.f),                          // player 1 level 2, player 2 level 2
-		FVector(-500.f, 9200.f, 10.f), FVector(-500.f, 9400.f, 10.f),                          // player 1 level 3, player 2 level 3
+		FVector(-400.f, 2600.f, 10.f),  FVector(-400.f, 4000.f, 10.f),                         // player 1 level 1, player 2 level 1
+		FVector(-500.f, 6400.f, 10.f),  FVector(-500.f, 7800.f, 10.f),                         // player 1 level 2, player 2 level 2
+		FVector(-500.f, 9200.f, 10.f),  FVector(-500.f, 9400.f, 10.f),                         // player 1 level 3, player 2 level 3
 		FVector(-570.f, 12300.f, 10.f), FVector(-500.f, 12500.f, 10.f),                        // player 1 level 4, player 2 level 4
-		FVector(-570.f, 12300.f, 10.f), FVector(-500.f, 12500.f, 10.f),                        // spare - usued
-		FVector(-570.f, 12300.f, 10.f), FVector(-500.f, 12500.f, 10.f),                        // spare - usued
-		FVector(-570.f, 12300.f, 10.f), FVector(-500.f, 12500.f, 10.f),                        // spare - usued
-		FVector(-570.f, 12300.f, 10.f), FVector(-500.f, 12500.f, 10.f),                        // spare - usued
-		FVector(-570.f, 12300.f, 10.f), FVector(-500.f, 12500.f, 10.f),                        // spare - usued
+		FVector(-520.f, 16790.f,10.f),	FVector(3100.f,16790.f, 10.f),						   // player 1 level 5, player 2 level 5
+		FVector(-1660.f, 22510.f, 180.f), FVector(4290.f,22510.f, 180.f),                      // player 1 level 6, player 2 level 6
+		FVector(100.f, 26620.f, 850.f), FVector(960.f,30850.f, 860.f),                         // player 1 level 7, player 2 level 7
+		FVector(-500.f, 16790.f,10.f),	FVector(3120.f,16790.f, 10.f),                         // spare - unused
+		FVector(-500.f, 16790.f,10.f),	FVector(3120.f,16790.f, 10.f),						   // spare - unused
+
 	};
 
 	// array containing index of played levels
