@@ -21,3 +21,9 @@ void AGun::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
+
+// Destroy gun on drop
+void AGun::DropGun()
+{
+	Destroy();
+}

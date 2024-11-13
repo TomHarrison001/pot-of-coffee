@@ -33,19 +33,10 @@ void ACheckpoint::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
 {
 	// Check if OtherActor is valid and can be cast to AMainCharacter
 	AMainCharacter* MainChar = Cast<AMainCharacter>(OtherActor);
+	AMyGameMode* GameMode = Cast<AMyGameMode>(GetWorld()->GetAuthGameMode());
+	
 	if (MainChar != nullptr)
 	{
-		if (MainChar->GetTag() == "Player0")
-		{
-			AMyGameMode* GameMode = Cast<AMyGameMode>(GetWorld()->GetAuthGameMode());
-			GameMode->EndLevel(0);
-
-		}
-		if (MainChar->GetTag() == "Player1")
-		{
-			AMyGameMode* GameMode = Cast<AMyGameMode>(GetWorld()->GetAuthGameMode());
-			GameMode->EndLevel(1);
-		
-		}
+		GameMode->EndLevel(MainChar->GetTag() == "Player0" ? 0 : 1);
 	}
 }

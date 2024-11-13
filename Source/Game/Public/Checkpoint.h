@@ -15,12 +15,9 @@ public:
 	// Sets default values for this actor's properties
 	ACheckpoint();
 
-
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
 
 public:	
 	// Called every frame

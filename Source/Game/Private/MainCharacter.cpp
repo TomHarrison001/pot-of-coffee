@@ -60,9 +60,9 @@ void AMainCharacter::Tick(float DeltaTime)
 
 	if (GetActorLocation().Z < -800.f)
 	{
+		if (GunCollected) DropGun();
 		TeleportTo(GameMode->GetLevelStartPos((GetTag() == "Player0") ? 0 : 1), GetActorRotation());
 	}
-
 }
 
 // Called to bind functionality to input
@@ -200,4 +200,6 @@ void AMainCharacter::CollectGun()
 void AMainCharacter::DropGun()
 {
 	GunCollected = false;
+
+	Gun->DropGun();
 }

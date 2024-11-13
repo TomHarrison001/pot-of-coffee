@@ -61,6 +61,9 @@ private:
 	// function returning if level is found in PlayedLevels array
 	bool PlayedLevel();
 
+	// function checking if a player has won
+	int PlayerWon();
+
 public:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category="HUD")
 	int TimedLoopsRemaining;

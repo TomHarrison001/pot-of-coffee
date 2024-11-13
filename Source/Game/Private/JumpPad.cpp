@@ -1,6 +1,3 @@
-
-
-
 #include "JumpPad.h"
 
 // Sets default values
@@ -19,21 +16,18 @@ AJumpPad::AJumpPad()
 	//Register Events
 	OnActorBeginOverlap.AddDynamic(this, &AJumpPad::OnOverlapBegin);
 	OnActorEndOverlap.AddDynamic(this, &AJumpPad::OnOverlapEnd);
-
 }
 
 // Called when the game starts or when spawned
 void AJumpPad::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
 void AJumpPad::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void AJumpPad::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)

@@ -1,6 +1,3 @@
-
-
-
 #include "DeathPad.h"
 
 // Sets default values
@@ -18,30 +15,29 @@ ADeathPad::ADeathPad()
 
 	//Register Events
 	OnActorBeginOverlap.AddDynamic(this, &ADeathPad::OnOverlapBegin);
-
 }
 
 // Called when the game starts or when spawned
 void ADeathPad::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
 void ADeathPad::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void ADeathPad::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
 {
+	// Check if OtherActor is valid and can be cast to AMainCharacter
 	AMainCharacter* MainChar = Cast<AMainCharacter>(OtherActor);
 	AMyGameMode* GameMode = Cast<AMyGameMode>(GetWorld()->GetAuthGameMode());
 
 	if (MainChar != nullptr)
 	{
-		MainChar-> TeleportTo(GameMode->GetLevelStartPos((MainChar->GetTag() == "Player0") ? 0 : 1), GetActorRotation());
+		FVector pos = MainChar->GetActorLocation();
+		MainChar->TeleportTo(FVector(pos.X, pos.Y, -800.f), GetActorRotation());
 	}
 }

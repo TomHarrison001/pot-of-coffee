@@ -27,4 +27,7 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* Mesh;
+
+public:
+	void DropGun();
 };

@@ -17,14 +17,8 @@ void AMyGameMode::BeginPlay()
 
 void AMyGameMode::IncrementScore(int player)
 {
-	if (player == 0)
-	{
-		P1Score++;
-	}
-	else
-	{
-		P2Score++;
-	}
+	if (player == 0) P1Score++;
+	else P2Score++;
 }
 
 //Return true if player can teleport
@@ -43,9 +37,10 @@ FVector AMyGameMode::GetLevelStartPos(int player)
 void AMyGameMode::TeleportPlayers()
 {
 	AActor* Player = Players[0];
-	Player->TeleportTo(GetLevelStartPos(0), FRotator(0.f, 0.f, 0.f));
+	FVector pos = Player->GetActorLocation();
+	Player->TeleportTo(FVector(pos.X, pos.Y, -800.f), Player->GetActorRotation());
 	Player = Players[1];
-	Player->TeleportTo(GetLevelStartPos(1), FRotator(0.f, 0.f, 0.f));
+	Player->TeleportTo(FVector(pos.X, pos.Y, -800.f), Player->GetActorRotation());
 }
 
 void AMyGameMode::PadActivated()
@@ -117,13 +112,17 @@ void AMyGameMode::EndLevel(int winner)
 	ActiveLevel = 0;
 	TeleportPlayers();
 	
-
-	if (P1Score >= 5 || P2Score >= 5)
+	if (PlayerWon() != -1)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Green, FString::Printf(TEXT("Game Ended. A player has won.")));
 		GLog->Log("Game ended because a player won.");
 		GLog->Log("Restarting...");
-		UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+		//UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+		// reset scores
+		P1Score = 0;
+		P2Score = 0;
+		// reset played levels array
+		PlayedLevels.Empty();
 	}
 }
 
@@ -140,3 +139,15 @@ bool AMyGameMode::PlayedLevel()
 	return false;
 }
 
+/// <summary>
+/// function to check if a player has won
+/// </summary>
+/// <returns>-1 if no player has won</returns>
+/// <returns>0 if player 1 has won</returns>
+/// <returns>1 if player 2 has won</returns>
+int AMyGameMode::PlayerWon()
+{
+	if (P1Score == 5) return 0;
+	if (P2Score == 5) return 1;
+	return -1;
+}
