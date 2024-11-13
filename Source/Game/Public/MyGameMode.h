@@ -37,7 +37,7 @@ private:
 	int ActiveLevel;
 
 	UPROPERTY(VisibleAnywhere, Category = "Levels")
-	FVector StartPositions[20] = { FVector(-20.f, -180.f, 90.f), FVector(-20.f, 180.f, 90.f),  // player 1 spawn, player 2 spawn
+	FVector StartPositions[22] = { FVector(-20.f, -180.f, 90.f), FVector(-20.f, 180.f, 90.f),  // player 1 spawn, player 2 spawn
 		FVector(-400.f, 2600.f, 10.f), FVector(-400.f, 4000.f, 10.f),                          // player 1 level 1, player 2 level 1
 		FVector(-500.f, 6400.f, 10.f), FVector(-500.f, 7800.f, 10.f),                          // player 1 level 2, player 2 level 2
 		FVector(-500.f, 9200.f, 10.f), FVector(-500.f, 9400.f, 10.f),                          // player 1 level 3, player 2 level 3
@@ -47,6 +47,7 @@ private:
 		FVector(100.f, 26620.f, 850.f), FVector(960.f, 30850.f, 860.f),                        // player 1 level 7, player 2 level 7
 		FVector(-530.f, 32400.f, 10.f),	FVector(-530.f, 32600.f, 10.f),                        // player 1 level 8, player 2 level 8
 		FVector(-530.f, 37900.f, 10.f),	FVector(-530.f, 38100.f, 10.f),                        // player 1 level 9, player 2 level 9
+		FVector(-520.f, 39200.f, 10.f),	FVector(-520.f, 39400.f, 10.f)                         // spare - unused
 	};
 
 	// array containing index of played levels

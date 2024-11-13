@@ -91,9 +91,9 @@ void AMyGameMode::EndTeleportTimer()
 		GetWorldTimerManager().ClearTimer(LoopedTimerHandle);
 		TimedLoopsRemaining = 3;
 		GLog->Log("Teleporting...");
-		ActiveLevel = FMath::RandRange(1, 9);
+		ActiveLevel = FMath::RandRange(1, 10);
 		while (PlayedLevel()) {
-			ActiveLevel = FMath::RandRange(1, 9);
+			ActiveLevel = FMath::RandRange(1, 10);
 		}
 		GLog->Log(*FString::Printf(TEXT("ACTIVE LEVEL: %i"), ActiveLevel));
 		TeleportPlayers();
