@@ -17,7 +17,6 @@ AGunCollectable::AGunCollectable()
 
 	//Register Events
 	OnActorBeginOverlap.AddDynamic(this, &AGunCollectable::OnOverlapBegin);
-	OnActorEndOverlap.AddDynamic(this, &AGunCollectable::OnOverlapEnd);
 }
 
 // Called when the game starts or when spawned
@@ -40,11 +39,7 @@ void AGunCollectable::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor
 	{
 		AMainCharacter* MainChar = Cast<AMainCharacter>(OtherActor);
 
-		MainChar->CollectGun();
+		MainChar->CollectGun(); //Set main character to 'gun mode'
 	}
 }
 
-void AGunCollectable::OnOverlapEnd(AActor* OverlappedActor, AActor* OtherActor)
-{
-	// Not currently used
-}

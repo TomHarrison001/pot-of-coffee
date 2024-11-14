@@ -32,14 +32,20 @@ void AJumpPad::Tick(float DeltaTime)
 
 void AJumpPad::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
 {
+	//Cast to main char
 	AMainCharacter* MainChar = Cast<AMainCharacter>(OtherActor);
+	//Set actors jump height to new value
 	MainChar->GetCharacterMovement()->JumpZVelocity = JumpHeight;
+	//Force player to be in walking state (allows to jump if not floored)
 	MainChar->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
+	//Jump!
 	MainChar->Jump();
 }
 
 void AJumpPad::OnOverlapEnd(AActor* OverlappedActor, AActor* OtherActor)
 {
+	//Cast to main char
 	AMainCharacter* MainChar = Cast<AMainCharacter>(OtherActor);
+	//Return actor back to normal jump height
 	MainChar->GetCharacterMovement()->JumpZVelocity = MainChar->NormJumpHeight;
 }

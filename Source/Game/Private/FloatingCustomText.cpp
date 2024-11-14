@@ -20,7 +20,7 @@ void AFloatingCustomText::BeginPlay()
 
 	if (!InputText.IsEmpty())
 	{
-		MyText->SetText(FText::FromString(InputText));
+		MyText->SetText(FText::FromString(InputText)); //Set the text to the inputted text from the inspector
 	}
 }
 

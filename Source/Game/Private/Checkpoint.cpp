@@ -37,6 +37,7 @@ void ACheckpoint::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
 	
 	if (MainChar != nullptr)
 	{
+		//End level and give point to player who won
 		GameMode->EndLevel(MainChar->GetTag() == "Player0" ? 0 : 1);
 	}
 }

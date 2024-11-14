@@ -93,6 +93,7 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AGun> GunClass;
 
+	//Gun actor
 	UPROPERTY()
 	AGun* Gun;
 

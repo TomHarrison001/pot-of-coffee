@@ -53,13 +53,16 @@ void AMainCharacter::Tick(float DeltaTime)
 
 	AMyGameMode* GameMode = Cast<AMyGameMode>(GetWorld()->GetAuthGameMode());
 
+	//Start timer when game is being played
 	if (GameMode->timerActive && GetTag() == "Player0")
 	{
 		GameMode->timer += DeltaTime;
 	}
 
+	//If actor dies
 	if (GetActorLocation().Z < -800.f)
 	{
+		//drop gun and respawn
 		if (GunCollected) DropGun();
 		TeleportTo(GameMode->GetLevelStartPos((GetTag() == "Player0") ? 0 : 1), GetActorRotation());
 	}
@@ -183,11 +186,13 @@ void AMainCharacter::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
 
 	if (Projectile != nullptr)
 	{
+		//If hit with a bullet, 'bounce' player away
 		FVector direction = Projectile->GetVelocity();
 		GetMesh()->AddImpulse(FVector(direction.X, direction.Y, 1.0f) * 100.0f);
 	}
 }
 
+//Set player to have a gun
 void AMainCharacter::CollectGun()
 {
 	GunCollected = true;
@@ -197,6 +202,7 @@ void AMainCharacter::CollectGun()
 	Gun->SetOwner(this);
 }
 
+//Remove gun from player
 void AMainCharacter::DropGun()
 {
 	GunCollected = false;

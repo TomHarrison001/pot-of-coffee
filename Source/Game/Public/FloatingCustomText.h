@@ -13,7 +13,6 @@ class GAME_API AFloatingCustomText : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AFloatingCustomText();
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -22,9 +21,14 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UTextRenderComponent* MyText; 
-
+	
+public:
+	//Exposed to edit for each text
 	UPROPERTY(EditAnywhere, category = "Text to display")
 	FString InputText;
+
+private:
+	//Local text
+	UTextRenderComponent* MyText;
 
 };

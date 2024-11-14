@@ -15,22 +15,11 @@ public:
 	// Sets default values for this actor's properties
 	ATriggerPad();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	//Change the colour of the cube of the pad
-	void ChangePadColour(FLinearColor NewColour);
-
-	/** Collectable static mesh */
+	// Collectable static mesh 
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Default")
 	UStaticMeshComponent* StaticMesh;
 
-	/** Allows child components to move freely */
+	// Allows child components to move freely 
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Default")
 	USceneComponent* DefaultSceneRoot;
 
@@ -53,6 +42,17 @@ public:
 	//on or off
 	UPROPERTY(VisibleAnywhere, Category = "Pad")
 	bool PadOn = false;
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+public:	
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	//Change the colour of the cube of the pad
+	void ChangePadColour(FLinearColor NewColour);
 
 	// overlap begin function
 	UFUNCTION()

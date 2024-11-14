@@ -37,7 +37,9 @@ void ADeathPad::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
 
 	if (MainChar != nullptr)
 	{
+		//Get the position of the main character
 		FVector pos = MainChar->GetActorLocation();
+		//Pos set under map, forces teleport back to spawn (death)
 		MainChar->TeleportTo(FVector(pos.X, pos.Y, -800.f), GetActorRotation());
 	}
 }

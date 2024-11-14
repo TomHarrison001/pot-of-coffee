@@ -15,6 +15,7 @@ void AMyGameMode::BeginPlay()
 	timerActive = false;
 }
 
+//Increment score for player who won
 void AMyGameMode::IncrementScore(int player)
 {
 	if (player == 0) P1Score++;
@@ -34,6 +35,7 @@ FVector AMyGameMode::GetLevelStartPos(int player)
 	return StartPositions[index];
 }
 
+//Teleport players off the map to be respawned
 void AMyGameMode::TeleportPlayers()
 {
 	AActor* Player = Players[0];
@@ -43,6 +45,7 @@ void AMyGameMode::TeleportPlayers()
 	Player->TeleportTo(FVector(pos.X, pos.Y, -800.f), Player->GetActorRotation());
 }
 
+//Increase / Decrease amount of pads active
 void AMyGameMode::PadActivated()
 {
 	PadsActivated++;
@@ -52,7 +55,6 @@ void AMyGameMode::PadActivated()
 		StartTeleportTimer();
 	}
 }
-
 void AMyGameMode::PadDeactivated()
 {
 	PadsActivated--;
@@ -117,7 +119,10 @@ void AMyGameMode::EndLevel(int winner)
 		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Green, FString::Printf(TEXT("Game Ended. A player has won.")));
 		GLog->Log("Game ended because a player won.");
 		GLog->Log("Restarting...");
+
+		//**Currently off - No official way to restart level**
 		//UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+		 
 		// reset scores
 		P1Score = 0;
 		P2Score = 0;
@@ -139,12 +144,7 @@ bool AMyGameMode::PlayedLevel()
 	return false;
 }
 
-/// <summary>
-/// function to check if a player has won
-/// </summary>
-/// <returns>-1 if no player has won</returns>
-/// <returns>0 if player 1 has won</returns>
-/// <returns>1 if player 2 has won</returns>
+// function to check if a player has won
 int AMyGameMode::PlayerWon()
 {
 	if (P1Score == 5) return 0;

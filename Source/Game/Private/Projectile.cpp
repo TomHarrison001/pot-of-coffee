@@ -41,6 +41,7 @@ AProjectile::AProjectile()
 		ProjectileMovementComponent->ProjectileGravityScale = 0.0f;
 	}
 
+	//Set meshes for projectile
 	if (!ProjectileMeshComponent)
 	{
 		ProjectileMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ProjectileMeshComponent"));
@@ -79,11 +80,13 @@ void AProjectile::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+//Fire in direction of the shoot vector
 void AProjectile::FireInDirection(const FVector& ShootDirection)
 {
 	ProjectileMovementComponent->Velocity = ShootDirection * ProjectileMovementComponent->InitialSpeed;
 }
 
+//Requires OnHit - Not using
 void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
 	/*
@@ -97,6 +100,7 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 	*/
 }
 
+//Get for velocity
 FVector AProjectile::ReturnVelocity()
 {
 	return ProjectileMovementComponent->Velocity;
