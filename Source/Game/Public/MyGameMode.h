@@ -34,7 +34,6 @@ public:
 	void ResetLevel();					  //Reset timer and level
 	void EndLevel(int winner);		      //End the level and increments score for winner
 
-public:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category="HUD")
 	int TimedLoopsRemaining;
 	
@@ -67,7 +66,7 @@ private:
 		FVector(100.f, 26620.f, 850.f), FVector(960.f, 30850.f, 860.f),                        // player 1 level 7, player 2 level 7
 		FVector(-530.f, 32400.f, 10.f),	FVector(-530.f, 32600.f, 10.f),                        // player 1 level 8, player 2 level 8
 		FVector(-530.f, 37900.f, 10.f),	FVector(-530.f, 38100.f, 10.f),                        // player 1 level 9, player 2 level 9
-		FVector(-520.f, 39200.f, 10.f),	FVector(-520.f, 39400.f, 10.f)                         // spare - unused
+		FVector(-520.f, 39200.f, 10.f),	FVector(-520.f, 39400.f, 10.f)                         // player 1 level 10, player 2 level 10
 	};
 
 	// array containing index of played levels

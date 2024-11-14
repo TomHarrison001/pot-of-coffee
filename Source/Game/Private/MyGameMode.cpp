@@ -116,13 +116,9 @@ void AMyGameMode::EndLevel(int winner)
 	
 	if (PlayerWon() != -1)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Green, FString::Printf(TEXT("Game Ended. A player has won.")));
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Green, FString::Printf(TEXT("Player &i Won!"), PlayerWon() + 1));
 		GLog->Log("Game ended because a player won.");
 		GLog->Log("Restarting...");
-
-		//**Currently off - No official way to restart level**
-		//UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
-		 
 		// reset scores
 		P1Score = 0;
 		P2Score = 0;
@@ -144,7 +140,12 @@ bool AMyGameMode::PlayedLevel()
 	return false;
 }
 
-// function to check if a player has won
+/// <summary>
+/// function to check if a player has won
+/// </summary>
+/// <returns>-1 if no player has won</returns>
+/// <returns>0 if player 1 has won</returns>
+/// <returns>1 if player 2 has won</returns>
 int AMyGameMode::PlayerWon()
 {
 	if (P1Score == 5) return 0;

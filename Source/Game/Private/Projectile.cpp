@@ -89,15 +89,7 @@ void AProjectile::FireInDirection(const FVector& ShootDirection)
 //Requires OnHit - Not using
 void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-	/*
-	GLog->Log(OtherComponent->GetName());
-	if (OtherActor != this && OtherComponent->IsSimulatingPhysics())
-	{
-		OtherComponent->AddImpulse(FVector(0.0f, 0.0f, 1000.f));
-		OtherComponent->AddImpulseAtLocation(ProjectileMovementComponent->Velocity * 10000000.0f, Hit.ImpactPoint);
-	}
-	Destroy();
-	*/
+	// not currently used
 }
 
 //Get for velocity

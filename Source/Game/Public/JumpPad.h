@@ -40,7 +40,6 @@ public:
 	UFUNCTION()
 	void OnOverlapEnd(class AActor* OverlappedActor, class AActor* OtherActor);
 
-public:
 	//Jump height
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Jump Boost")
 	float JumpHeight = 800;
