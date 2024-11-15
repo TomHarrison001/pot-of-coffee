@@ -116,7 +116,7 @@ void AMyGameMode::EndLevel(int winner)
 	
 	if (PlayerWon() != -1)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Green, FString::Printf(TEXT("Player &i Won!"), PlayerWon() + 1));
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Green, FString::Printf(TEXT("Player %i Won!"), PlayerWon() + 1));
 		GLog->Log("Game ended because a player won.");
 		GLog->Log("Restarting...");
 		// reset scores
